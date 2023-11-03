@@ -1,0 +1,59 @@
+@font-face {
+    font-family: "Saitamaar";
+    src: url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff2") format("woff2"),
+        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff") format("woff"),
+        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.ttf") format("ttf");
+    font-display: swap;
+}
+
+p#brute {
+    font-family: Saitamaar;
+    white-space: pre;
+    font-size: 16px;
+    line-height: 18px;
+    overflow: auto;
+    white-space: nowrap;
+}
+
+html{
+    height: 100%;
+}
+
+body {
+    background: radial-gradient(ellipse at center, #4c6386, #2b3b52, #182230);
+    color: white;
+    text-size-adjust: 100%;
+    font-size: large;
+    height: auto;
+}
+
+button {
+    padding: 0.5em 1em;
+    background: #4d6891;
+    color: white;
+    font-size: large;
+    border-radius: 0px;
+    border-width: 0px;
+    border-bottom: solid 4px #192230;
+    width: 100%;
+    text-align: center;
+}
+
+button:hover {
+    background: #809eca;
+}
+
+button:disabled {
+    color: gray;
+    border-bottom: none;
+}
+
+.text-content {
+    background: rgba(25,34,48, .4);
+    padding: 3px 3px;
+}
+
+h2 {
+    padding: 0.25em 0.5em;
+    border-left: solid 5px #CC1D1B;
+}
