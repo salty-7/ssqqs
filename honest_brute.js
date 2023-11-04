@@ -29,7 +29,7 @@ const step = [
 const perfect_step = "スロー、スロー、クイック、クイック、スロー、";
 
 // 踊れない素材はプログラムには不要です
-const max_step_count = 5000;
+const max_step_count = 1000;
 
 // Todo:もっとかっこよくなりませんか？
 const honest = '\
@@ -56,11 +56,15 @@ function dance(){
     var post_btn = document.getElementById('post');
     post_btn.disabled = true; // 処理中はボタンを非アクティブにする
 
+    var step_counter = 0;
+
     var pop = setInterval(function(){
         your_step.textContent += step[getRandomInt(0, step.length-1)];
-        if(your_step.textContent.endsWith(perfect_step)){
+        step_counter++;
+        if(your_step.textContent.endsWith(perfect_step) ||
+           step_counter > max_step_count){
             clearInterval(pop);
-            brute.innerHTML = createHonest(your_step.textContent.length);
+            brute.innerHTML = createHonest(step_counter);
             exe_btn.disabled = false;
             post_btn.disabled = false;
         }
@@ -73,11 +77,11 @@ function dance(){
 function createHonest(count){
     var text = "";
 
-    if(count < 23){
+    if(count <= 5){
         // さすがにここまでたどり着く人はいないでしょう
         text = "Todo:"
     }
-    else if(count < 100){
+    else if(count < 50){
         text = "たった" + count + "ステップで踊れてしまうなんて。ダンスが得意なのですね！";
     }
     else if(count < max_step_count){
@@ -94,9 +98,9 @@ function createHonest(count){
 
 // ご友人の素晴らしさを太陽系にも広めましょう！！
 function post(){
-    var count = document.getElementById('your_step').textContent.length;
-    var text = "私は" + count + "ステップでブルートゥと踊れました。";
-    if(count > max_step_count){
+    var count = document.getElementById('brute').textContent.match(/[0-9]+ステップ/);
+    var text = "私は" + count + "でブルートゥと踊れました。";
+    if(count == null){
         text = "私はブルートゥと踊れませんでした。";
     }
     text += " https://salty-7.github.io/ssqqs/index.html"
