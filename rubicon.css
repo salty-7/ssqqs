@@ -1,59 +1,385 @@
-@font-face {
-    font-family: "Saitamaar";
-    src: url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff2") format("woff2"),
-        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff") format("woff"),
-        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.ttf") format("ttf");
-    font-display: swap;
+/*
+ * RUBICON UI — ARMORED CORE VI 公式サイトの配色・組版を参考にしたスタイル。
+ * 外部フォント／外部アセットには一切依存しません。
+ */
+
+:root {
+    --bg: #121212;
+    --bg-panel: #1c1c1c;
+    --bg-inset: #0e0e0e;
+    --line: #505050;
+    --line-dim: #2e2e2e;
+    --fg: #eff5f5;
+    --fg-dim: #b1b1b1;
+    --fg-mute: #949494;   /* 公式は#828282だが、小さい字のコントラスト4.5:1のため少し上げた */
+    --accent: #cc1d1b;          /* ACの警告色 */
+    --khaki: #796954;
+
+    --font-ja: "Noto Sans JP", "Hiragino Sans", "Hiragino Kaku Gothic ProN",
+        "Yu Gothic", Meiryo, system-ui, sans-serif;
+    --font-latin: "Bebas Neue", "Oswald", "Arial Narrow", "Helvetica Neue",
+        Arial, sans-serif;
+    --font-aa: ui-monospace, "Noto Sans Mono CJK JP", "BIZ UDGothic",
+        "MS Gothic", "Osaka-Mono", monospace;
 }
 
-p#brute {
-    font-family: Saitamaar;
-    white-space: pre;
-    font-size: 16px;
-    line-height: 18px;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-html{
-    height: 100%;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
-    background: radial-gradient(ellipse at center, #4c6386, #2b3b52, #182230);
-    color: white;
+    margin: 0 auto;
+    padding: clamp(1rem, 0.5rem + 2vw, 2.5rem) clamp(1rem, 0.5rem + 2vw, 2rem) 4rem;
+    max-width: 56rem;
+    min-height: 100dvh;
+    background-color: var(--bg);
+    /* 走査線。うるさくならない程度に */
+    background-image: repeating-linear-gradient(
+        to bottom,
+        rgba(255, 255, 255, .022) 0 1px,
+        transparent 1px 3px
+    );
+    color: var(--fg);
+    font-family: var(--font-ja);
+    font-weight: 400;
+    font-size: clamp(0.95rem, 0.9rem + 0.35vw, 1.05rem);
+    line-height: 1.9;
     text-size-adjust: 100%;
-    font-size: large;
-    height: auto;
 }
 
-button {
-    padding: 0.5em 1em;
-    background: #4d6891;
-    color: white;
-    font-size: large;
-    border-radius: 0px;
-    border-width: 0px;
-    border-bottom: solid 4px #192230;
-    width: 100%;
-    text-align: center;
+/* ── 見出しまわり ─────────────────────────────────── */
+
+.kicker {
+    display: flex;
+    align-items: center;
+    gap: 0.75em;
+    margin: 0 0 0.75rem;
+    color: var(--fg-mute);
+    font-family: var(--font-latin);
+    font-size: 0.8rem;
+    font-weight: 400;
+    letter-spacing: 0.3em;
+    line-height: 1;
+    text-transform: uppercase;
 }
 
-button:hover {
-    background: #809eca;
+.kicker .tick {
+    flex: 1 1 auto;
+    height: 1px;
+    background: var(--line-dim);
 }
 
-button:disabled {
-    color: gray;
-    border-bottom: none;
+.site-header {
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--fg);
+    margin-bottom: 3rem;
 }
 
-.text-content {
-    background: rgba(25,34,48, .4);
-    padding: 3px 3px;
+h1 {
+    margin: 0;
+    font-size: clamp(1.15rem, 0.95rem + 1.1vw, 1.75rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.6;
 }
 
 h2 {
-    padding: 0.25em 0.5em;
-    border-left: solid 5px #CC1D1B;
+    position: relative;
+    margin: 0 0 1.25rem;
+    padding-left: 1rem;
+    font-size: clamp(1rem, 0.95rem + 0.5vw, 1.2rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.7;
+}
+
+/* HUDのティック */
+h2::before {
+    content: "";
+    position: absolute;
+    top: 0.55em;
+    left: 0;
+    width: 4px;
+    height: 1em;
+    background: var(--accent);
+}
+
+/* ── パネル ──────────────────────────────────────── */
+
+.panel {
+    position: relative;
+    margin-bottom: 2.5rem;
+    padding: 1.5rem clamp(1rem, 0.5rem + 1.5vw, 1.75rem) 1.75rem;
+    background: var(--bg-panel);
+    border: 1px solid var(--line-dim);
+}
+
+/* 隅の合わせ目 */
+.panel::before,
+.panel::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border: 1px solid var(--line);
+}
+
+.panel::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+}
+
+.panel::after {
+    right: -1px;
+    bottom: -1px;
+    border-width: 0 1px 1px 0;
+}
+
+/* ヘッダーのキッカー帯と対になる、ページ末尾の断り書き */
+.site-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-dim);
+}
+
+.disclaimer {
+    margin: 0;
+    color: var(--fg-mute);
+    /* 和文なのでキッカーの字間は与えず、読める組みにする */
+    font-size: 0.8rem;
+    line-height: 1.9;
+}
+
+/* ── 折りたたみ（details/summary） ─────────────────── */
+
+summary {
+    position: relative;
+    padding-right: 2.5rem;
+    list-style: none;   /* 標準の三角マーカーを消す */
+    cursor: pointer;
+}
+
+summary::-webkit-details-marker {
+    display: none;
+}
+
+summary h2 {
+    margin: 0;
+}
+
+/* 閉じているときはラテン体の見出しだけ見せる */
+details:not([open]) > summary h2 {
+    display: none;
+}
+
+details:not([open]) > summary .kicker {
+    margin-bottom: 0;
+}
+
+/* 開閉インジケータ。ACの「＋」に倣う */
+summary::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    width: 14px;
+    height: 14px;
+    margin-top: -7px;
+    background:
+        linear-gradient(var(--fg-mute), var(--fg-mute)) center / 14px 1px no-repeat,
+        linear-gradient(var(--fg-mute), var(--fg-mute)) center / 1px 14px no-repeat;
+    transition: transform .2s, background-color .2s;
+}
+
+details[open] > summary::after {
+    /* 縦棒を畳んで「－」にする */
+    background:
+        linear-gradient(var(--fg), var(--fg)) center / 14px 1px no-repeat;
+    transform: rotate(180deg);
+}
+
+summary:hover h2,
+summary:hover .kicker {
+    color: var(--fg);
+}
+
+summary:hover::after {
+    background-color: var(--fg);
+}
+
+details[open] > summary {
+    margin-bottom: 1.5rem;
+}
+
+/* 閉じているときは行儀よく詰める */
+details.panel:not([open]) {
+    padding-bottom: 1.5rem;
+}
+
+/* ── ボタン ──────────────────────────────────────── */
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
+}
+
+.btn {
+    flex: 1 1 15rem;
+    width: 100%;
+    padding: 0.85em 1.25em;
+    background: transparent;
+    color: var(--fg);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    line-height: 1.5;
+    text-align: center;
+    border: 1px solid var(--line);
+    border-radius: 0;
+    cursor: pointer;
+    transition: background-color .2s, border-color .2s, color .2s;
+}
+
+.btn:hover:not(:disabled) {
+    background: #2a2a2a;
+    border-color: var(--fg);
+}
+
+.btn-primary {
+    background: #242424;
+    border-color: var(--fg-mute);
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: var(--fg);
+    color: #121212;
+    border-color: var(--fg);
+}
+
+.btn-abort {
+    color: #e08b8a;
+    border-color: #7b4b4b;
+}
+
+.btn-abort:hover:not(:disabled) {
+    background: var(--accent);
+    color: var(--fg);
+    border-color: var(--accent);
+}
+
+.btn:disabled {
+    color: var(--fg-mute);
+    background: #191919;
+    border-color: var(--line-dim);
+    cursor: default;
+}
+
+#post {
+    margin-top: 1.25rem;
+}
+
+:focus-visible {
+    outline: 2px solid var(--fg);
+    outline-offset: 3px;
+}
+
+/* ── ステップログとAA ─────────────────────────────── */
+
+.log {
+    margin: 0;
+    padding: 1rem;
+    min-height: 6.5rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--line-dim);
+    border-left: 2px solid var(--khaki);
+    color: var(--fg-dim);
+    font-size: 0.95rem;
+    line-height: 1.9;
+    word-break: break-all;
+}
+
+#brute {
+    margin: 1.25rem 0 0;
+    padding: 1rem;
+    background: var(--bg-inset);
+    border: 1px solid var(--line-dim);
+    color: var(--fg);
+    font-family: var(--font-aa);
+    font-size: 16px;
+    line-height: 18px;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+#brute:empty {
+    display: none;
+}
+
+/* ── データ列（クレジット・変更履歴） ───────────────── */
+
+/* メインコンテンツではないので本文より一段小さく */
+.data-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-top: 1px solid var(--line-dim);
+    font-size: 0.9rem;
+    line-height: 1.8;
+}
+
+.data-list li {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25em 1.25em;
+    padding: 0.85em 0.25em;
+    border-bottom: 1px solid var(--line-dim);
+    line-height: 1.7;
+}
+
+.data-list time,
+.data-key {
+    flex: 0 0 8.5em;
+    color: var(--fg-mute);
+    font-family: var(--font-latin);
+    font-size: 0.85rem;
+    letter-spacing: 0.12em;
+}
+
+.data-key {
+    font-family: var(--font-ja);
+    letter-spacing: 0.04em;
+}
+
+a {
+    color: var(--fg);
+    text-decoration-color: var(--line);
+    text-underline-offset: 0.3em;
+}
+
+a:hover {
+    color: var(--accent);
+    text-decoration-color: var(--accent);
+}
+
+/* ── その他 ──────────────────────────────────────── */
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition-duration: .01ms !important;
+    }
 }

@@ -1,29 +1,74 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>「スロー」「クイック」をランダムに出力して、パーフェクトステップが踏めたら素敵だ！ご友人！！</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="description" content="「スロー」「クイック」をランダムに出力し続けて、オーネスト・ブルートゥとパーフェクトステップが踏めるまで踊るジョークサイトです。">
+    <link rel="canonical" href="https://salty-7.github.io/ssqqs/">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="ssqqs">
+    <meta property="og:url" content="https://salty-7.github.io/ssqqs/">
+    <meta property="og:title" content="「スロー」「クイック」をランダムに出力して、パーフェクトステップが踏めたら素敵だ！ご友人！！">
+    <meta property="og:description" content="ランダムに刻まれるステップがパーフェクトステップになるまで、ブルートゥと踊り続けるジョークサイトです。">
+    <meta property="og:locale" content="ja_JP">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@salty_7">
+
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232b3b52'/%3E%3Ctext x='32' y='44' text-anchor='middle' font-family='monospace' font-size='28' fill='%23ffffff'%3E621%3C/text%3E%3C/svg%3E">
     <link rel="stylesheet" href="rubicon.css">
-    <script src="honest_brute.js"></script>
+    <script type="module" src="honest_brute.js"></script>
 </head>
 <body>
-    <h1>「スロー」「クイック」をランダムに出力して、パーフェクトステップが踏めたら素敵だ！ご友人！！</h1>
-    <h2>ようこそビジター。このような僻地まで来てくださるとは、感激だ！</h2>
-    <button id='621' type="button" onclick="dance()">さあ、一緒に踊りましょう！！</button>
-    <p id='your_step' class="text-content">上手に踊れるでしょうか？</p>
-    <p id='brute' class="text-content"></p>
-    <button id='post' type="button" onclick="post()">結果をtweetする。</button>
-    <h2>おや？カーラのご友人でしたか。ならば、私にとっても友人同然です。</h2>
-    <div class="text-content">
-    <p>自分= <a href='https://twitter.com/salty_7'>@salty_7</a></p>
-    <p>リポジトリ= <a href='https://github.com/salty-7/ssqqs'>github</a></p>
-    </div>
-    <h2>新しいご友人。楽しい時を過ごしましょう。</h2>
-    <div class="text-content">
-    <p>
-    変更履歴：<br>
-    2023/11/03 13:00  初版公開<br>
-    </p>
-    </div>
+    <header class="site-header">
+        <p class="kicker" aria-hidden="true">SSQQS<span class="tick"></span>PERFECT STEP GENERATOR</p>
+        <h1>「スロー」「クイック」をランダムに出力して、パーフェクトステップが踏めたら素敵だ！ご友人！！</h1>
+    </header>
+
+    <main>
+        <section class="panel">
+            <p class="kicker" aria-hidden="true">DANCE</p>
+            <h2>ようこそビジター。このような僻地まで来てくださるとは、感激だ！</h2>
+            <div class="button-row">
+                <button id="dance-btn" class="btn btn-primary" data-callsign="621" type="button">さあ、一緒に踊りましょう！！</button>
+                <button id="stop-btn" class="btn btn-abort" type="button" hidden>花はどこだ…手向けなければ…</button>
+            </div>
+            <p id="your_step" class="log" aria-live="polite" aria-atomic="false">上手に踊れるでしょうか？</p>
+            <pre id="brute" role="img" aria-label="オーネスト・ブルートゥ"></pre>
+            <!-- AAの中に台詞が焼き込まれるので、支援技術向けに台詞だけを別で読ませる -->
+            <p id="result" class="visually-hidden" role="status"></p>
+            <button id="post" class="btn" type="button">結果をポストする。</button>
+        </section>
+
+        <details class="panel">
+            <summary>
+                <p class="kicker">NEWS</p>
+                <h2>新しいご友人。楽しい時を過ごしましょう。</h2>
+            </summary>
+            <ul class="data-list">
+                <li><time datetime="2023-11-03T13:00+09:00">2023.11.03</time> 初版公開</li>
+                <li><time datetime="2026-08-02">2026.08.02</time> スマホ対応、中止ボタン追加、AAフォントの外部依存を削除、デザイン刷新</li>
+            </ul>
+        </details>
+
+        <details class="panel">
+            <summary>
+                <p class="kicker">CREDIT</p>
+                <h2>おや？カーラのご友人でしたか。ならば、私にとっても友人同然です。</h2>
+            </summary>
+            <ul class="data-list">
+                <li><span class="data-key">作者</span><a href="https://twitter.com/salty_7">@salty_7</a></li>
+                <li><span class="data-key">リポジトリ</span><a href="https://github.com/salty-7/ssqqs">github</a></li>
+                <li><span class="data-key">本サイト</span>個人が趣味で制作した非公式のファンサイトです。株式会社フロム・ソフトウェアおよび株式会社バンダイナムコエンターテインメントとは一切関係ありません。</li>
+                <li><span class="data-key">権利表記</span>『ARMORED CORE VI FIRES OF RUBICON』は株式会社フロム・ソフトウェアの著作物です。</li>
+            </ul>
+        </details>
+    </main>
+
+    <footer class="site-footer">
+        <p class="kicker" aria-hidden="true">DISCLAIMER<span class="tick"></span></p>
+        <p class="disclaimer">本サイトは個人が趣味で制作した非公式のファンサイトです。株式会社フロム・ソフトウェアおよび株式会社バンダイナムコエンターテインメントとは一切関係ありません。</p>
+    </footer>
 </body>
 </html>
