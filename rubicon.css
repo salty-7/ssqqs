@@ -1,59 +1,112 @@
-@font-face {
-    font-family: "Saitamaar";
-    src: url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff2") format("woff2"),
-        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.woff") format("woff"),
-        url("https://fonts-aahub.netlify.com/assets/fonts/Saitamaar/Saitamaar.ttf") format("ttf");
-    font-display: swap;
+:root {
+    --ac-red: #CC1D1B;
+    --ac-blue: #4d6891;
+    --ac-blue-hover: #809eca;
+    --ac-navy: #192230;
+    --panel: rgba(25, 34, 48, .4);
+    --aa-font: ui-monospace, "Noto Sans Mono CJK JP", "BIZ UDGothic",
+        "MS Gothic", "Osaka-Mono", monospace;
 }
 
-p#brute {
-    font-family: Saitamaar;
-    white-space: pre;
-    font-size: 16px;
-    line-height: 18px;
-    overflow: auto;
-    white-space: nowrap;
-}
-
-html{
-    height: 100%;
+*, *::before, *::after {
+    box-sizing: border-box;
 }
 
 body {
-    background: radial-gradient(ellipse at center, #4c6386, #2b3b52, #182230);
+    margin: 0 auto;
+    padding: 1rem;
+    max-width: 48rem;
+    min-height: 100dvh;
+    background: radial-gradient(ellipse at center, #4c6386, #2b3b52, #182230) fixed;
     color: white;
     text-size-adjust: 100%;
-    font-size: large;
-    height: auto;
+    font-size: clamp(1rem, 0.9rem + 0.5vw, 1.15rem);
+    line-height: 1.6;
 }
 
-button {
-    padding: 0.5em 1em;
-    background: #4d6891;
-    color: white;
-    font-size: large;
-    border-radius: 0px;
-    border-width: 0px;
-    border-bottom: solid 4px #192230;
-    width: 100%;
-    text-align: center;
-}
-
-button:hover {
-    background: #809eca;
-}
-
-button:disabled {
-    color: gray;
-    border-bottom: none;
-}
-
-.text-content {
-    background: rgba(25,34,48, .4);
-    padding: 3px 3px;
+h1 {
+    font-size: clamp(1.3rem, 1.1rem + 1.2vw, 2rem);
+    line-height: 1.4;
 }
 
 h2 {
     padding: 0.25em 0.5em;
-    border-left: solid 5px #CC1D1B;
+    border-left: solid 5px var(--ac-red);
+    font-size: clamp(1.1rem, 1rem + 0.6vw, 1.4rem);
+    line-height: 1.4;
+}
+
+a {
+    color: #9fc4f5;
+}
+
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+button {
+    flex: 1 1 14rem;
+    padding: 0.5em 1em;
+    background: var(--ac-blue);
+    color: white;
+    font-size: inherit;
+    font-family: inherit;
+    border-radius: 0px;
+    border-width: 0px;
+    border-bottom: solid 4px var(--ac-navy);
+    width: 100%;
+    text-align: center;
+    cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+    background: var(--ac-blue-hover);
+}
+
+button:disabled {
+    color: #cdd5e0;
+    background: #3d5271;
+    border-bottom: none;
+    cursor: default;
+}
+
+:focus-visible {
+    outline: 3px solid #ffd34d;
+    outline-offset: 2px;
+}
+
+.text-content {
+    background: var(--panel);
+    padding: 3px 3px;
+}
+
+#brute {
+    margin: 0;
+    font-family: var(--aa-font);
+    font-size: 16px;
+    line-height: 18px;
+    white-space: pre;
+    overflow-x: auto;
+}
+
+#brute:empty {
+    display: none;
+}
+
+.visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+ul {
+    margin: 0;
+    padding-left: 1.5em;
 }

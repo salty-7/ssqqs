@@ -1,9 +1,9 @@
 /////////////////////////////////////////////////////////////////////////
 //     /\
 //    /  \       Abstract   : Perfect Dance Program with 621.
-//   / /\ \      Author     : Honest Brute. ver1.02(Salvaged from Coral.)
+//   / /\ \      Author     : Honest Brute. ver1.03(Salvaged from Coral.)
 //  / /A.\ \     Created at : ████/11/3
-// / / L. \ \    Copyright  : Kate Markson All Mind Reserved. 
+// / / L. \ \    Copyright  : Kate Markson All Mind Reserved.
 ///_/ _M._ \_\
 /////////////////////////////////////////////////////////////////////////
 
@@ -32,83 +32,159 @@ const perfect_step = "スロー、スロー、クイック、クイック、ス�
 const max_step_count = 1000;
 
 // Todo:もっとかっこよくなりませんか？
-const honest = '\
-－－－－<br>\
-　○　○<br>\
-○　○　<br>\
-　○　○　＜text<br>\
-○　○　<br>\
-　○　○<br>\
-－－－－<br>\
-<br>\
-';
+const honest = `－－－－
+　○　○
+○　○
+　○　○　＜text
+○　○
+　○　○
+－－－－
+`;
+
+// 踊るテンポ。460 => bpm=128くらい
+const TEMPO_MS = 460;
+
+const danceBtn = document.getElementById('dance-btn');
+const stopBtn = document.getElementById('stop-btn');
+const postBtn = document.getElementById('post');
+const yourStep = document.getElementById('your_step');
+const brute = document.getElementById('brute');
+const resultText = document.getElementById('result');
+
+// 踊りの記憶。DOMから読み直したりはしません
+let timerId = null;
+let stepCount = 0;
+let lastResult = null; // { count, danced }
 
 function dance(){
-    var your_step = document.getElementById('your_step');
-    your_step.textContent = '';
+    stop();
 
-    var brute = document.getElementById('brute');
+    yourStep.textContent = '';
     brute.textContent = '';
+    resultText.textContent = '';
+    lastResult = null;
+    stepCount = 0;
 
-    var exe_btn = document.getElementById('621');
-    exe_btn.disabled = true;  // 処理中はボタンを非アクティブにする
+    setDancing(true);
 
-    var post_btn = document.getElementById('post');
-    post_btn.disabled = true; // 処理中はボタンを非アクティブにする
+    // 目が回るご友人のために。踊りは省略して結果だけお見せします
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        while(!nextStep()){ /* 休みなく踊ります */ }
+        return;
+    }
 
-    var step_counter = 0;
-
-    var pop = setInterval(function(){
-        your_step.textContent += step[getRandomInt(0, step.length-1)];
-        step_counter++;
-        if(your_step.textContent.endsWith(perfect_step) ||
-           step_counter > max_step_count){
-            clearInterval(pop);
-            brute.innerHTML = createHonest(step_counter);
-            exe_btn.disabled = false;
-            post_btn.disabled = false;
+    timerId = setInterval(function(){
+        if(nextStep()){
+            return;
         }
 
-        // 最下部にスクロールする
-        document.documentElement.scrollTop = document.body.scrollHeight;
-    }, 460); // 460 => bpm=128くらい
+        // 最下部を見ているご友人だけ、追いかけて差し上げましょう
+        if(isNearBottom()){
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    }, TEMPO_MS);
 }
 
-function createHonest(count){
-    var text = "";
+// 一歩踏む。踊り終えたらtrueを返します
+function nextStep(){
+    yourStep.textContent += step[getRandomInt(0, step.length-1)];
+    stepCount++;
 
+    if(yourStep.textContent.endsWith(perfect_step) ||
+       stepCount > max_step_count){
+        finish(stepCount);
+        return true;
+    }
+
+    return false;
+}
+
+function finish(count){
+    const text = createResultText(count);
+
+    showHonest(text);
+    lastResult = { count: count, danced: count < max_step_count };
+
+    stop();
+}
+
+// 踊るのをやめたご友人にも、踊り疲れたご友人と同じ言葉を
+function giveUp(){
+    if(timerId !== null){
+        showHonest(createResultText(max_step_count));
+    }
+    stop();
+}
+
+function showHonest(text){
+    brute.textContent = honest.replace('text', text);
+    resultText.textContent = text;
+}
+
+function stop(){
+    if(timerId !== null){
+        clearInterval(timerId);
+        timerId = null;
+    }
+    setDancing(false);
+}
+
+function setDancing(dancing){
+    danceBtn.disabled = dancing;  // 処理中はボタンを非アクティブにする
+    postBtn.disabled = dancing;   // 処理中はボタンを非アクティブにする
+    stopBtn.hidden = !dancing;
+}
+
+function createResultText(count){
     if(count <= 5){
         // さすがにここまでたどり着く人はいないでしょう
-        text = "Todo:"
+        return "不憫だ…";
     }
-    else if(count < 50){
-        text = "たった" + count + "ステップで踊れてしまうなんて。ダンスが得意なのですね！";
+    if(count < 50){
+        return "たった" + count + "ステップで踊れてしまうなんて。ダンスが得意なのですね！";
     }
-    else if(count < max_step_count){
-        text = count + "ステップで踊れるなんて、素敵だ。ご友人！！";
+    if(count < max_step_count){
+        return count + "ステップで踊れるなんて、素敵だ。ご友人！！";
     }
-    else{
-        text = "ご友人…、踊り疲れてしまったのですね。花はどこだ…。手向けなければ…！！"
-    }
-
-    var honest_brute = honest.replace('text', text);
-
-    return honest_brute;
+    return "ご友人…踊り疲れたのですね　花はどこだ…手向けなければ…";
 }
 
 // ご友人の素晴らしさを太陽系にも広めましょう！！
-function post(){
-    var count = document.getElementById('brute').textContent.match(/[0-9]+ステップ/);
-    var text = "私は" + count + "でブルートゥと踊れました。";
-    if(count == null){
+function share(){
+    let text;
+    if(lastResult && lastResult.danced){
+        text = "私は" + lastResult.count + "ステップでブルートゥと踊れました。";
+    }
+    else if(!lastResult && stepCount > 0){
+        // 途中で踊るのをやめてしまったご友人
+        text = "私は" + stepCount + "ステップでブルートゥと踊り疲れてしまいました。";
+    }
+    else{
         text = "私はブルートゥと踊れませんでした。";
     }
-    text += " https://salty-7.github.io/ssqqs/index.html"
-    window.location.href = 'https://twitter.com/intent/tweet?text=' + encodeURIComponent(text);
+    const url = location.href;
+
+    if(navigator.share){
+        navigator.share({ text: text, url: url }).catch(function(){
+            // ご友人が共有をお取りやめになりました
+        });
+        return;
+    }
+
+    const intent = 'https://x.com/intent/post?text=' + encodeURIComponent(text) +
+                   '&url=' + encodeURIComponent(url);
+    window.open(intent, '_blank', 'noopener');
+}
+
+function isNearBottom(){
+    const scrolled = window.scrollY + window.innerHeight;
+    return document.body.scrollHeight - scrolled < 80;
 }
 
 function getRandomInt(min, max){
     return Math.floor( Math.random() * (max - min + 1) ) + min;
 }
 
-document.getElementById('621').addEventListener('click', dance);
+danceBtn.addEventListener('click', dance);
+stopBtn.addEventListener('click', giveUp);
+postBtn.addEventListener('click', share);
