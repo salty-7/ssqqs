@@ -21,42 +21,47 @@
     <script type="module" src="honest_brute.js"></script>
 </head>
 <body>
-    <header>
+    <header class="site-header">
+        <p class="kicker" aria-hidden="true">SSQQS<span class="tick"></span>PERFECT STEP GENERATOR</p>
         <h1>「スロー」「クイック」をランダムに出力して、パーフェクトステップが踏めたら素敵だ！ご友人！！</h1>
     </header>
 
     <main>
-        <section>
+        <section class="panel">
+            <p class="kicker" aria-hidden="true">DANCE</p>
             <h2>ようこそビジター。このような僻地まで来てくださるとは、感激だ！</h2>
             <div class="button-row">
-                <button id="dance-btn" data-callsign="621" type="button">さあ、一緒に踊りましょう！！</button>
-                <button id="stop-btn" type="button" hidden>花はどこだ…手向けなければ…</button>
+                <button id="dance-btn" class="btn btn-primary" data-callsign="621" type="button">さあ、一緒に踊りましょう！！</button>
+                <button id="stop-btn" class="btn btn-abort" type="button" hidden>花はどこだ…手向けなければ…</button>
             </div>
-            <p id="your_step" class="text-content" aria-live="polite" aria-atomic="false">上手に踊れるでしょうか？</p>
-            <pre id="brute" class="text-content" role="img" aria-label="オーネスト・ブルートゥ"></pre>
+            <p id="your_step" class="log" aria-live="polite" aria-atomic="false">上手に踊れるでしょうか？</p>
+            <pre id="brute" role="img" aria-label="オーネスト・ブルートゥ"></pre>
             <!-- AAの中に台詞が焼き込まれるので、支援技術向けに台詞だけを別で読ませる -->
             <p id="result" class="visually-hidden" role="status"></p>
-            <button id="post" type="button">結果をポストする。</button>
+            <button id="post" class="btn" type="button">結果をポストする。</button>
         </section>
 
-        <section>
-            <h2>おや？カーラのご友人でしたか。ならば、私にとっても友人同然です。</h2>
-            <div class="text-content">
-                <p>自分= <a href="https://twitter.com/salty_7">@salty_7</a></p>
-                <p>リポジトリ= <a href="https://github.com/salty-7/ssqqs">github</a></p>
-            </div>
-        </section>
+        <details class="panel">
+            <summary>
+                <p class="kicker">CREDIT</p>
+                <h2>おや？カーラのご友人でしたか。ならば、私にとっても友人同然です。</h2>
+            </summary>
+            <ul class="data-list">
+                <li><span class="data-key">作者</span><a href="https://twitter.com/salty_7">@salty_7</a></li>
+                <li><span class="data-key">リポジトリ</span><a href="https://github.com/salty-7/ssqqs">github</a></li>
+            </ul>
+        </details>
 
-        <section>
-            <h2>新しいご友人。楽しい時を過ごしましょう。</h2>
-            <div class="text-content">
-                <p>変更履歴：</p>
-                <ul>
-                    <li><time datetime="2023-11-03T13:00+09:00">2023/11/03 13:00</time> 初版公開</li>
-                    <li><time datetime="2026-08-02">2026/08/02</time> スマホ対応、中止ボタン追加、AAフォントの外部依存を削除</li>
-                </ul>
-            </div>
-        </section>
+        <details class="panel">
+            <summary>
+                <p class="kicker">NEWS</p>
+                <h2>新しいご友人。楽しい時を過ごしましょう。</h2>
+            </summary>
+            <ul class="data-list">
+                <li><time datetime="2023-11-03T13:00+09:00">2023.11.03</time> 初版公開</li>
+                <li><time datetime="2026-08-02">2026.08.02</time> スマホ対応、中止ボタン追加、AAフォントの外部依存を削除、デザイン刷新</li>
+            </ul>
+        </details>
     </main>
 </body>
 </html>
