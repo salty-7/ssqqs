@@ -136,6 +136,21 @@ h2::before {
     border-width: 0 1px 1px 0;
 }
 
+/* ヘッダーのキッカー帯と対になる、ページ末尾の断り書き */
+.site-footer {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--line-dim);
+}
+
+.disclaimer {
+    margin: 0;
+    color: var(--fg-mute);
+    /* 和文なのでキッカーの字間は与えず、読める組みにする */
+    font-size: 0.8rem;
+    line-height: 1.9;
+}
+
 /* ── 折りたたみ（details/summary） ─────────────────── */
 
 summary {
