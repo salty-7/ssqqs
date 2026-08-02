@@ -164,7 +164,9 @@ function share(){
     }
     const url = location.href;
 
-    if(navigator.share){
+    // Windowsの共有シートはtextを捨ててURLしか渡さないため、
+    // ネイティブ共有はタッチ主体の端末に限る
+    if(navigator.share && window.matchMedia('(pointer: coarse)').matches){
         navigator.share({ text: text, url: url }).catch(function(){
             // ご友人が共有をお取りやめになりました
         });
